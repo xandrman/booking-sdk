@@ -1,0 +1,27 @@
+{
+    "name": "xandrman/booking-sdk",
+    "version": "dev-1.0",
+    "description": "SDK for API https://github.com/xandrman/booking-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xandrman",
+            "email": "xandrman@yandex.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Xandrman\\BookingSdk\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Xandrman\\BookingSdk\\BookingSdkServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "laravel/framework": "^8.83"
+    }
+}
