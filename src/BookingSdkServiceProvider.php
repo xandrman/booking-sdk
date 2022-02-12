@@ -23,6 +23,9 @@ class BookingSdkServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->publishes(
+            [__DIR__.'/../config/booking.php' => config_path('booking.php')], 'booking-sdk-config'
+        );
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'booking-sdk');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
