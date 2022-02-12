@@ -3,6 +3,7 @@
 namespace Xandrman\BookingSdk;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class BookingSdkService implements BookingSdkInterface
 {
@@ -11,11 +12,30 @@ class BookingSdkService implements BookingSdkInterface
     private const URI_CUSTOMER = 'customer';
     private const URI_BOOKING = 'booking';
 
+    private const STORAGE_PATH = 'booking-sdk/servers.txt';
+
     private string $url;
 
     public function __construct()
     {
-        $this->url = config('booking.url', 'http://127.0.0.1:8000') . '/' . self::URI_PREFIX . '/';
+        $this->url = $this->getStorageUrl() ?: $this->getConfigUrl();
+        $this->url .=  '/' . self::URI_PREFIX . '/';
+    }
+
+    private function getStorageUrl(): ?string
+    {
+        if (Storage::exists(self::STORAGE_PATH)) {
+            $servers_from_storage = explode("\n", trim(Storage::get(self::STORAGE_PATH)));
+            if (count($servers_from_storage)) {
+                return $servers_from_storage[0];
+            }
+        }
+        return null;
+    }
+
+    private function getConfigUrl(): string
+    {
+        return config('booking.url', 'http://127.0.0.1:8000');
     }
 
     public function bookingIndex(): array
