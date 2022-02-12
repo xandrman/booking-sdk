@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-dark bg-dark">
     @yield('navbar')
-    <a class="navbar-brand" href="{{ route('index') }}">
+    <a class="navbar-brand text-right d-none d-md-inline-block" href="{{ route('index') }}">
         <span class="bg-warning text-dark font-weight-bold px-2 py-1 small">booking-sdk</span>
     </a>
 </nav>
