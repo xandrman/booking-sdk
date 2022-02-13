@@ -3,8 +3,8 @@
 namespace Xandrman\BookingSdk;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -18,10 +18,14 @@ class BookingController extends BaseController
         $this->service = $service;
     }
 
-    public function index(): View
+    public function index()
     {
-        $result = $this->service->bookingIndex();
-        $bookings = $result['result']['bookings'];
+        try {
+            $result = $this->service->bookingIndex();
+            $bookings = $result['result']['bookings'];
+        } catch (Exception $e) {
+            return view('booking-sdk::error.index')->withErrors([$e->getMessage()]);
+        }
         return view('booking-sdk::booking.index', compact('bookings'));
     }
 
@@ -31,12 +35,16 @@ class BookingController extends BaseController
         return view('booking-sdk::booking.create', compact('customer_id'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $attributes = $request->except('_token');
         $attributes['from'] = Carbon::parse($attributes['from'])->format('Y-m-d H:i:s');
         $attributes['to'] = Carbon::parse($attributes['to'])->format('Y-m-d H:i:s');
-        $result = $this->service->bookingStore($attributes);
+        try {
+            $result = $this->service->bookingStore($attributes);
+        } catch (Exception $e) {
+            return view('booking-sdk::error.index')->withErrors([$e->getMessage()]);
+        }
         if (array_key_exists('result', $result)) {
             return response()->redirectTo(route('index'));
         } else {

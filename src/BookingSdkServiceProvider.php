@@ -2,6 +2,7 @@
 
 namespace Xandrman\BookingSdk;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class BookingSdkServiceProvider extends ServiceProvider
@@ -14,6 +15,7 @@ class BookingSdkServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(BookingSdkInterface::class, BookingSdkService::class);
+        $this->app->singleton(SettingsInterface::class, SettingsService::class);
     }
 
     /**
@@ -21,8 +23,9 @@ class BookingSdkServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(): void
+    public function boot(SettingsInterface $settings): void
     {
+        View::share('urls', $settings->getUrls());
         $this->publishes(
             [__DIR__.'/../config/booking.php' => config_path('booking.php')], 'booking-sdk-config'
         );

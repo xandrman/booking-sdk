@@ -2,16 +2,10 @@
 
 @section('title', "Создать клиента")
 
-@section('navbar')
-    <nav aria-label="breadcrumb" class="">
-        <ol class="breadcrumb m-0 bg-dark">
-            <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-white">Бронирования</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}" class="text-white">Клиенты</a></li>
-            <li class="breadcrumb-item active text-white" aria-current="page">
-                <span class="text-white">Создать клиента</span>
-            </li>
-        </ol>
-    </nav>
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('index') }}">Бронирования</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('customer.index') }}">Клиенты</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Создать клиента</li>
 @endsection
 
 @section('content')

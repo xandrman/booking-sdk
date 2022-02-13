@@ -2,14 +2,8 @@
 
 @section('title', "Бронирования")
 
-@section('navbar')
-    <nav aria-label="breadcrumb" class="">
-        <ol class="breadcrumb m-0 bg-dark">
-            <li class="breadcrumb-item active text-white" aria-current="page">
-                <span class="text-white">Бронирования</span>
-            </li>
-        </ol>
-    </nav>
+@section('breadcrumb')
+    <li class="breadcrumb-item active" aria-current="page">Бронирования</li>
 @endsection
 
 @section('buttons')
